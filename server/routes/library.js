@@ -1,5 +1,8 @@
 const express = require('express');
 
+// import Library db model
+const { Library } = require('../database/index');
+
 const route = express.Router();
 
 // handle GET requests

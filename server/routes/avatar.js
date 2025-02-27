@@ -1,5 +1,8 @@
 const express = require('express');
 
+// import Avatar db model
+const { Avatar } = require('../database/index');
+
 const route = express.Router();
 
 // handle GET requests

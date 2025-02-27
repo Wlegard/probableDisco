@@ -4,6 +4,9 @@ module.exports = {
     "sourceType": "module",
     "requireConfigFile": false
   },
+  "rules": {
+    "no-console": "off"
+  },
   "parser": "@babel/eslint-parser",
   "extends": "eslint-config-airbnb"
 };
