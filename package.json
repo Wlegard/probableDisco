@@ -1,7 +1,7 @@
 {
-  "name": "probabledisco",
+  "name": "Slime Wire",
   "version": "1.0.0",
-  "description": "",
+  "description": "A music storage, sharing, and playing app",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.js",
@@ -13,14 +13,13 @@
     "url": "git+https://github.com/BMH397/probableDisco.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "c0dedecepti0n",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/BMH397/probableDisco/issues"
   },
   "homepage": "https://github.com/BMH397/probableDisco#readme",
   "dependencies": {
-    "@babel/eslint-parser": "7.26.8",
     "axios": "1.8.1",
     "babel-loader": "^9.2.1",
     "express": "4.21.2",
@@ -33,6 +32,7 @@
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "7.26.3",
+    "@babel/eslint-parser": "7.26.8",
     "clean-webpack-plugin": "4.0.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
@@ -45,6 +45,8 @@
     "rimraf": "6.0.1",
     "webpack": "^5.98.0",
     "webpack-cli": "6.0.1",
-    "webpackbar": "7.0.0"
+    "webpackbar": "7.0.0",
+    "@eslint/config-array": "0.19.2",
+    "@eslint/object-schema": "2.1.6"
   }
 }
