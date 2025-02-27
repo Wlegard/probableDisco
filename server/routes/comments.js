@@ -1,5 +1,8 @@
 const express = require('express');
 
+// import Comments db model
+const { Comments } = require('../database/index');
+
 const route = express.Router();
 
 // handle GET requests

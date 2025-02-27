@@ -1,5 +1,11 @@
-const mongoose = require("mongoose");
-const { Schema, model } = mongoose;
+const mongoose = require('mongoose');
+const Avatar = require('./models/Avatar');
+const Comments = require('./models/Comments');
+const Library = require('./models/Library');
+const Queue = require('./models/Queue');
+const Settings = require('./models/Settings');
+
+// connect to mongo database
 mongoose.connect('mongodb://localhost:27017/slimewire')
 .then(() => {
     console.log('✔️ successful db connection');
@@ -10,15 +16,11 @@ mongoose.connect('mongodb://localhost:27017/slimewire')
 });
 
 
-const Avatar = new Schema(
-    {
-// description, 
-    }
-);
-
-// mary here 
 
 module.exports = {
-
-
+  Avatar,
+  Comments,
+  Library,
+  Queue,
+  Settings
 }

@@ -1,5 +1,8 @@
 const express = require('express');
 
+// import Settings db model
+const { Settings } = require('../database/index');
+
 const route = express.Router();
 
 // handle GET requests
