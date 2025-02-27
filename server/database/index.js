@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 mongoose.connect('mongodb://localhost:27017/slimewire')
 .then(() => {
-    console.log('✔️ succesful db connection');
+    console.log('✔️ successful db connection');
 })
 
 .catch(err => {
-    console.log('❌ unsucessful db connection', err);
+    console.log('❌ unsuccessful db connection', err);
 });
 
 

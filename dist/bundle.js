@@ -15,7 +15,7 @@
   \**************************/
 /***/ (() => {
 
-eval("\n\n//# sourceURL=webpack://probabledisco/./client/index.jsx?");
+eval("\n\n//# sourceURL=webpack://Slime_Wire/./client/index.jsx?");
 
 /***/ })
 
