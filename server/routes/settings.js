@@ -6,22 +6,22 @@ const { Settings } = require('../database/index');
 const route = express.Router();
 
 // handle GET requests
-route.get('/', (req, res) => {
+route.get('/settings', (req, res) => {
 
 });
 
 // handle POST requests
-route.post('/', (req, res) => {
+route.post('/settings', (req, res) => {
 
 });
 
 // handle PATCH requests
-route.patch('/', (req, res) => {
+route.patch('/settings', (req, res) => {
 
 });
 
 // handle DELETE requests
-route.delete('/', (req, res) => {
+route.delete('/settings', (req, res) => {
 
 });
 
