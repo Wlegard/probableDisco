@@ -1,28 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-        avatarImages: [],
-        currentImage: ''
-    };
-    this.stateChanger = this.stateChanger.bind(this);
-  }
+import Settings from "./Settings.jsx";
 
+function App() {
+  const [themes, setThemes] = useState([]);
+  const [theme, setTheme] = useState({});
+  const [avatars, setAvatars] = useState([]);
+  const [currentImage, setCurrentImage] = useState("");
 
-
-  componentDidMount() {}
-
-stateChanger(stateName, dataToInsert){
-    this.setState({
-        [stateName]: dataToInsert
-    })
+  return (
+    <div>
+      placeholder
+      <Settings />
+    </div>
+  );
 }
 
-  render() {
-    return <div>placeholder</div>;
-  }
-}
+// this.state = {
+
+//         avatarImages: [],
+//         currentImage: ''
+//     };
+//     this.stateChanger = this.stateChanger.bind(this);
+//   }
+
+//   componentDidMount() {}
+
+// stateChanger(stateName, dataToInsert){
+//     this.setState({
+//         [stateName]: dataToInsert
+//     })
+// }
+
+//   render() {
+// return <div>placeholder</div>;
+// }
+//}
 
 export default App;
