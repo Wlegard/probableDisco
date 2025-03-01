@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from 'react';
+const axios = require('axios');
 
 function Settings(props) {
   //const [something, setSomething] = useState(0);
+  const getThemes = () => {
+    axios.get('/settings');
+  };
+  const addTheme = () => {
+    axios.post('/settings');
+  };
+  const deleteTheme = () => {
+    axios.delete('/settings');
+  };
+  const updateTheme = () => {
+    axios.patch('/settings');
+  };
+
+
   return (
     <div id="settings">
       <label for="themes">
