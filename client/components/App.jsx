@@ -1,40 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React from 'react';
+import Search from './Search.jsx';
+const axios = require('axios');
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-import Settings from "./Settings.jsx";
+  componentDidMount() {}
 
-function App() {
-  const [themes, setThemes] = useState([]);
-  const [theme, setTheme] = useState({});
-  const [avatars, setAvatars] = useState([]);
-  const [currentImage, setCurrentImage] = useState("");
+  searchDeezer(query) {
+    axios
+      .get(`https://api.deezer.com/search?q=${query}`)
+      .then(data => {
+        console.log('successfully queried deezer', data[0]);
+        return data;
+      })
+      .catch(err => {
+        console.error('deezer query failed', err);
+      });
+  }
 
-  return (
-    <div>
-      placeholder
-      <Settings />
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <nav className='main-nav'>Slime Wire</nav>
+        <div className='main-content'>
+          <Search handleSearch={this.searchDeezer} />
+        </div>
+      </div>
+    );
+  }
 }
-
-// this.state = {
-
-//         avatarImages: [],
-//         currentImage: ''
-//     };
-//     this.stateChanger = this.stateChanger.bind(this);
-//   }
-
-//   componentDidMount() {}
-
-// stateChanger(stateName, dataToInsert){
-//     this.setState({
-//         [stateName]: dataToInsert
-//     })
-// }
-
-//   render() {
-// return <div>placeholder</div>;
-// }
-//}
 
 export default App;
