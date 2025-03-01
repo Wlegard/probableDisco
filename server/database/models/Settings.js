@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 
 const SettingsSchema = new Schema(
   {
-    loadoutName:
+    loadoutName: String,
     appSetting: {
       primaryColor: String,
       secondaryColor: String,
