@@ -8,14 +8,17 @@ function Settings(props) {
         <span style="font-weight:bold">Theme Loadouts</span>
         <select id="themes">
           {
-            <option key="idk">insert </option>
+            <div key="idk">
+              <option key="idk">Example Theme</option>
+              <button>Delete Theme</button>
+            </div>
           }
         </select>
         <div id="forms">
           {
             <div key="idk">
+              <span style="color:darkgrey">Primary Color</span>
               <input onChange={e => console.log(e.target.value)} placeholder="insert primary color (can be name or hex value)"></input>
-              <button>Delete Theme</button>
             </div>
           }
           <button>Add Theme</button>
