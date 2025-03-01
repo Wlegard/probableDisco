@@ -20,7 +20,7 @@ function Settings(props) {
   return (
     <div id="settings">
       <label for="themes">
-        <span style="font-weight:bold">Theme Loadouts</span>
+        <span style={{fontWeight:'bold'}}>Theme Loadouts</span>
         <select id="themes">
           {
             <div key="idk">
@@ -32,7 +32,7 @@ function Settings(props) {
         <div id="forms">
           {
             <div key="idk">
-              <span style="color:darkgrey">Primary Color</span>
+              <span style={{color:'darkgrey'}}>Primary Color</span>
               <input onChange={e => console.log(e.target.value)} placeholder="insert primary color (can be name or hex value)"></input>
             </div>
           }
