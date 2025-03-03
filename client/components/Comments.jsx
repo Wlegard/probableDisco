@@ -8,17 +8,17 @@ const Comments = ({ songId }) => {
 
   //stateto hold the list of comments from the server
 
-  // const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
 
 
   // state o hold the new comment input from the user
 
-  // const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState('');
 
   //fetch comments when the component loads or when the songId changes
   useEffect(() => {
     //trequest comments for the specific song
-    axios.get(`/api/comments/${songId}`)
+    axios.get(`/db/comments/${songId}`)
       .then(response => {
         //update comments state with the data received
         setComments(response.data);
@@ -27,13 +27,13 @@ const Comments = ({ songId }) => {
   }, [songId]);
 
   //handle form submission to add a new comment
-  const handleSubmit = (eventt) => {
+  const handleSubmit = (e) => {
     //prevent default form page refresh
     // eventt.preventDefault();
 
-    axios.post('/api/comments', {
+    axios.post('/db/comments', {
       // user data should be unique
-      username: 'Anonymous',
+      username: 'usersChoice',
       //the actual comment text
       content: newComment,
       //the ID of the song this comment belongs to
@@ -56,6 +56,8 @@ const Comments = ({ songId }) => {
       <ul>
         {comments.map((comment) => (
           <li key={comment._id}>
+
+             {/* dynamic comment data */}
             <strong>{comment.username}:</strong> {comment.content}
           </li>
         ))}
@@ -65,10 +67,10 @@ const Comments = ({ songId }) => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Whatever comment..."
+          placeholder="Whatever comment.."
           value={newComment}
           //update state as user types
-          onChange={(eventt) => setNewComment(eventt.target.value)}
+          onChange={(e) => setNewComment(e.target.value)}
           required
         />
         <button type="submit">Post Comment</button>
