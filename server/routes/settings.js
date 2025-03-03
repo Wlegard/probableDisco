@@ -8,7 +8,7 @@ const route = express.Router();
 // create reference to default values?
 
 // handle GET requests
-route.get('/settings', (req, res) => {
+route.get('/', (req, res) => {
   // acquire array of settings (themes) from database
   Settings.find()
     .then(themes => {
@@ -22,7 +22,7 @@ route.get('/settings', (req, res) => {
 });
 
 // handle POST requests
-route.post('/settings', (req, res) => {
+route.post('/', (req, res) => {
 
   // insert new setting (theme) into the database
   Settings.create(req.body)
@@ -37,12 +37,12 @@ route.post('/settings', (req, res) => {
 });
 
 // handle PATCH requests
-route.patch('/settings', (req, res) => {
+route.patch('/', (req, res) => {
 
 });
 
 // handle DELETE requests
-route.delete('/settings', (req, res) => {
+route.delete('/', (req, res) => {
 
 });
 

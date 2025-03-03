@@ -21,6 +21,13 @@ application.use(express.urlencoded({ extended: true }));
 const distPath = path.resolve(__dirname, "../dist");
 application.use(express.static(distPath));
 
+// link routers to express server
+application.use("/avatar", avatarRoute);
+application.use("/comments", commentsRoute);
+application.use("/library", libraryRoute);
+application.use("/queue", queueRoute);
+application.use("/settings", settingsRoute);
+
 // start up the express server using the port number
 application.listen(portNum, () => {
   console.log(`Listening on port: ${portNum}`);
