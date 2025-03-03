@@ -5,13 +5,20 @@ function Settings({ themes, setThemes, theme, setTheme}) {
   //const [something, setSomething] = useState(0);
 
   useEffect(() => {
-    // run setTheme to change the application's current theme upon first render of the Settings component
-    setTheme(themes[0]);
+    // run getThemes and then setTheme to change the application's current theme upon first render of the Settings component
+    getThemes()
+      .then(() => {
+        console.log("DOES THIS WORK???");
+        setTheme(themes[0]);
+      })
+      .catch(err => {
+        console.error(err);
+      })
   }, []);
 
   const getThemes = () => {
     // send get request to /settings on server
-    axios.get('/settings')
+    return axios.get('/settings')
       .then(settings => {
         // set themes in App's state to be the returned settings
         setThemes(settings);
