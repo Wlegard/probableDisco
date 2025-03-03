@@ -4,17 +4,13 @@ const { Schema, model } = mongoose;
 
 const SettingsSchema = new Schema(
   {
-    loadoutName: String,
-    appSetting: {
-      primaryColor: String,
-      secondaryColor: String,
-
-    },
-    avatarSettings: {},
-    commentsSettings: {},
-    librarySettings: {},
-    queueSettings: {},
-    settingsSettings: {},
+    themeName: String,
+    primaryColor: String,
+    secondaryColor: String,
+    tertiaryColor: String,
+    cursor: String,
+    font: String,
+    borderRadius: Number,
     userId: Number,
   },
 );
