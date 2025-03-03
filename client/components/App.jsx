@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Settings from "./Settings.jsx";
 import Search from "./Search.jsx";
+import Avatar from "./Avatar.jsx";
+import img from "../images/slimewire.png"
 const axios = require("axios");
 
 function App() {
   const [themes, setThemes] = useState([]);
   const [theme, setTheme] = useState({});
   const [avatars, setAvatars] = useState([]);
-  const [currentImage, setCurrentImage] = useState("");
+  const [currentImage, setCurrentImage] = useState("https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg");
 
   const searchDeezer = (query) => {
     axios
@@ -23,9 +25,14 @@ function App() {
 
   return (
     <div>
+        <img src={img}/>
       <nav className="main-nav">Slime Wire</nav>
       <div className="main-content">
         <Search handleSearch={searchDeezer} />
+        <Avatar avatars={avatars} 
+                setAvatars={setAvatars}
+                currentImage={currentImage}
+                setCurrentImage={setCurrentImage}/>
         <Settings />
       </div>
     </div>

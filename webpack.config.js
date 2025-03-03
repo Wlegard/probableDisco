@@ -23,7 +23,20 @@ module.exports = {
                             '@babel/preset-react'],
                 }
             }
-        }]
+        },
+        {
+            test: /\.png$/,
+            use: [
+                {
+                 loader: "file-loader",
+                 options: {
+                    name: "[name].[hash].[ext]",
+                    outputPath: "images/"
+                 }   
+                }
+            ]
+        }
+    ]
     },
     plugins: [
         new WebpackBar(),
