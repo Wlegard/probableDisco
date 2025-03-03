@@ -68,7 +68,7 @@ const Comments = ({ songId }) => {
           placeholder="Whatever comment..."
           value={newComment}
           //update state as user types
-          onChange={(eventt) => setNewComment(e.target.value)}
+          onChange={(eventt) => setNewComment(eventt.target.value)}
           required
         />
         <button type="submit">Post Comment</button>
