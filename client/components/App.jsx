@@ -1,74 +1,100 @@
-import React, { useState, useEffect } from "react";
-import Settings from "./Settings.jsx";
-import Search from "./Search.jsx";
-import Avatar from "./Avatar.jsx";
-import img from "../images/slimewire.png"
-const axios = require("axios");
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
+const axios = require('axios');
+// Components
+import Settings from './Settings.jsx';
+import Search from './Search.jsx';
+import Avatar from './Avatar.jsx';
+import Library from './Library.jsx';
+import Comments from './Comments.jsx';
+import Queue from './Queue.jsx';
+import Logo from '../images/slimewire.png';
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState(''); 
   const [themes, setThemes] = useState([]);
-  const [theme, setTheme] = useState({});
   const [avatars, setAvatars] = useState([]);
-  const [currentImage, setCurrentImage] = useState("https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg");
-
-  const searchDeezer = (query) => {
-    axios
-      .get(`https://api.deezer.com/search?q=${query}`)
-      .then((data) => {
-        console.log("successfully queried deezer", data[0]);
-        return data;
-      })
-      .catch((err) => {
-        console.error("deezer query failed", err);
-      });
-  };
+  const [currentImage, setCurrentImage] = useState(
+    'https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg'
+  );
 
   return (
-    <div>
-        <img src={img}/>
-      <nav className="main-nav">Slime Wire</nav>
-      <div className="main-content">
-        <Search handleSearch={searchDeezer} />
-        <Avatar avatars={avatars} 
-                setAvatars={setAvatars}
-                currentImage={currentImage}
-                setCurrentImage={setCurrentImage}/>
-        <Settings />
+    <Router>
+      <div>
+        <img src={Logo} alt='App Logo' style={{ height: 115, width: 500 }} />
+
+        {/* Nav Links */}
+        <nav className='nav'>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/settings'>Settings</Link>
+            </li>
+            <li>
+              <Link to='/search'>Advanced Search</Link>
+            </li>
+            <li>
+              <Link to='/avatar'>Avatar</Link>
+            </li>
+            <li>
+              <Link to='/library'>Library</Link>
+            </li>
+            <li>
+              <Link to='/comments'>Comments</Link>
+            </li>
+          </ul>
+        </nav>
+
+       
+        <div className='main-content'>
+            {/* Routes = Nav Link Page Paths */}
+          <Routes>
+            {/* Home/App */}
+            {/* Homepage elements in this route div */}
+            <Route
+              path='/'
+              element={
+                <div>
+                  <h1>Get Slimed</h1>
+                  <Settings />
+                   {/* Avatar */}
+                  <img
+                    src={currentImage}
+                    style={{ width: '50%', height: 'auto' }}
+                  />
+                </div>
+              }
+            />
+            {/* Settings */}
+            <Route path='/settings' element={<Settings />} />
+            {/* Search */}
+            <Route path='/search' element={<Search />} />
+            {/* Avatar */}
+            <Route
+              path='/avatar'Define your Routes here
+              element={
+                <Avatar
+                  avatars={avatars}
+                  setAvatars={setAvatars}
+                  currentImage={currentImage}
+                  setCurrentImage={setCurrentImage}
+                />
+              }
+            />
+            {/* Library */}
+            <Route path='/library' element={<Library />} />
+            {/* Comments */}
+            <Route path='/comments' element={<Comments />} />
+            {/* Queue */}
+            <Route path='/queue' element={<Queue />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {};
-//   }
-
-//   componentDidMount() {}
-
-//   searchDeezer(query) {
-//     axios
-//       .get(`https://api.deezer.com/search?q=${query}`)
-//       .then(data => {
-//         console.log('successfully queried deezer', data[0]);
-//         return data;
-//       })
-//       .catch(err => {
-//         console.error('deezer query failed', err);
-//       });
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <nav className='main-nav'>Slime Wire</nav>
-//         <div className='main-content'>
-//           <Search handleSearch={this.searchDeezer} />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
 
 export default App;
