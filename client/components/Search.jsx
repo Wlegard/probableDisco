@@ -1,7 +1,4 @@
 import React, { createContext, useContext, useActionState, useState, useEffect } from "react";
-import ReactDom from 'react-dom';
-
-import axios  from 'axios'
 
 function Search() {
  
@@ -48,9 +45,7 @@ function Search() {
       const response = await fetch(`https://api.deezer.com/search?q=${queryString}&limit=10`);
       if (!response.ok) {
         throw new Error('Failed to fetch results');
-      } else {
-        console.log('good fetch')
-      }
+      } 
 
       const data = await response.json();
       setResults(data.data || []); 
