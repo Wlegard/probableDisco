@@ -64,7 +64,8 @@ function Search() {
   return (
     <div className='advanced-search'>
       <h1 style={{fontFamily: 'creepster'}}> Advanced Search </h1>
-      <div className='search-container'>
+      <div className='search-container'> 
+        <h3>Search for tracks by artist, song, or album—use any combination of these options!</h3>
         <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="artist">Artist</label>
