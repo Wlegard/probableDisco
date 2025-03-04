@@ -29,11 +29,18 @@ function App() {
       <nav className="main-nav">Slime Wire</nav>
       <div className="main-content">
         <Search handleSearch={searchDeezer} />
-        <Avatar avatars={avatars} 
-                setAvatars={setAvatars}
-                currentImage={currentImage}
-                setCurrentImage={setCurrentImage}/>
-        <Settings />
+        <Avatar
+          avatars={avatars} 
+          setAvatars={setAvatars}
+          currentImage={currentImage}
+          setCurrentImage={setCurrentImage}
+        />
+        <Settings
+          themes={themes} 
+          setThemes={setThemes}
+          theme={theme}
+          setTheme={setTheme}
+        />
       </div>
     </div>
   );
