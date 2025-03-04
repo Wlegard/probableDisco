@@ -12,7 +12,6 @@ import Queue from './Queue.jsx';
 import Logo from '../images/slimewire.png';
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState(''); 
   const [themes, setThemes] = useState([]);
   const [avatars, setAvatars] = useState([]);
   const [currentImage, setCurrentImage] = useState(
@@ -44,6 +43,9 @@ function App() {
             </li>
             <li>
               <Link to='/comments'>Comments</Link>
+            </li>
+            <li>
+              <Link to='/queue'>Music Player</Link>
             </li>
           </ul>
         </nav>

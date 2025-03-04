@@ -44,7 +44,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             path: path.resolve(__dirname, 'dist'),
             filename: 'index.html',
-            template:'template.ejs'
+            template:'template.ejs',
+            favicon: path.resolve(__dirname, 'client/images/favicon.ico')
         }),
     ]
 

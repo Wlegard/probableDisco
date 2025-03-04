@@ -1,75 +1,124 @@
 import React, { createContext, useContext, useActionState, useState, useEffect } from "react";
+import ReactDom from 'react-dom';
+
 import axios  from 'axios'
 
-const searchDeezer = query => {
-  axios
-    .get(`https://api.deezer.com/search?q=${query}`)
-    .then(data => {
-      console.log('successfully queried deezer', data[0]);
-      return data;
-    })
-    .catch(err => {
-      console.error('deezer query failed', err);
-    });
-};
+function Search() {
+ 
+  // Hook: useState
+  const [artist, setArtist] = useState(''); // artist query
+  const [song, setSong] = useState(''); // song query
+  const [album, setAlbum] = useState(''); // album query
+  const [results, setResults] = useState([]); // API results
+  const [loading, setLoading] = useState(false); // loading state
+  const [error, setError] = useState('');     // error handling
 
-function Search({}) {
-  // useActionState for form data
-  const [state, formAction] = useActionState(fn, initialState, permalink);
-
-  // context for the form
-  const FormContext = createContext();
-  // custom hook to use form context
-  const useForm = () => {
-    return useContext(FormContext);
+  // Handle input changes for song, artist, and album
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'artist') setArtist(value);
+    if (name === 'song') setSong(value);
+    if (name === 'album') setAlbum(value);
   };
-  // form provider component
-  const FormProvider = ({ children }) => {
-    const [searchQuery, setSearchQuery] = useState({
-      artist: '',
-      song: '',
-      album: '',
-    });
-    const handleInputChange = (e) => {
-      const { artist, value } = e.target;
+
+  // Create the query string 
+  const createQueryString = () => {
+    let query = '';
+    if (artist) query += `artist:'${artist}'`;
+    if (song) query += `track:'${song}'`;
+    if (album) query += `album:'${album}'`;
+    return query;
+  };
+
+  // Handle Submit : make API call
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    setError('');
+    setResults([]);
+
+    try {
+      // Build the query string with user inputs
+      const queryString = createQueryString();
+      if (!queryString) 
+        setError('enter at least 1 search term')
+         // Ensure at least one parameter is provided
+      
+      const response = await fetch(`https://api.deezer.com/search?q=${queryString}&limit=10`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch results');
+      } else {
+        console.log('good fetch')
+      }
+
+      const data = await response.json();
+      setResults(data.data || []); 
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-  }; 
-  const ArtistContext = createContext(null)
-  const SongContext = createContext(null)
-  const AlbumContext = createContext(null)
-
-  const artist = useContext(ArtistContext);
-  const song = useContext(SongContext);
-  const album= useContext(AlbumContext);
-
-
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  
+  };
 
   return (
     <div className='advanced-search'>
-      <h1> Advanced Search </h1>
+      <h1 style={{fontFamily: 'creepster'}}> Advanced Search </h1>
       <div className='search-container'>
-        <form action={ formAction }>
-          <ArtistContext.Provider value={artist} >
-            <input class='create-input' placeholder='Artist'></input>
-          </ArtistContext.Provider>
-          <SongContext.Provider value={song}>
-            <input class='create-input' placeholder='Song'></input>
-          </SongContext.Provider>
-          <AlbumContext.Provider value={album}>
-            <input class='create-input' placeholder='Album'></input>
-          </AlbumContext.Provider>
-          <button class='submit-button' type='submit'>
+        <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="artist">Artist</label>
+          <input
+            type="text"
+            id="artist"
+            name="artist"
+            value={artist}
+            onChange={handleInputChange}
+            placeholder="Search for an artist"
+          />
+        </div>
+        <div>
+          <label htmlFor="song">Song</label>
+          <input
+            type="text"
+            id="song"
+            name="song"
+            value={song}
+            onChange={handleInputChange}
+            placeholder="Search for a song"
+          />
+        </div>
+        <div>
+          <label htmlFor="album">Album</label>
+          <input
+            type="text"
+            id="album"
+            name="album"
+            value={album}
+            onChange={handleInputChange}
+            placeholder="Search for an album"
+          />
+        </div>
+          <button className='submit-button' type='submit'>
             {' '}
             🔎
           </button>
         </form>
+
+        {loading && <p>Loading...</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
       </div>
+
       <div className='results-container'>
+        <ul style={{ listStyleType: 'none'}}>
+        {results.map((result, index) => (
+          <li key={index}>
+            <strong>{result.title}</strong> by {result.artist.name} from ({result.album.title})
+            <button>add to playlist</button>
+          </li>
+        ))}
+        </ul>
         <div className='result'></div>
       </div>
     </div>
