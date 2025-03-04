@@ -60,7 +60,7 @@ function App() {
               path='/'
               element={
                 <div>
-                  <h1>Get Slimed</h1>
+                  <h1 style={{fontFamily: 'creepster'}}>Get Slimed</h1>
                   <Settings />
                    {/* Avatar */}
                   <img
