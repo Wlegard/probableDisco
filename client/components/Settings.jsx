@@ -22,6 +22,8 @@ function Settings({ themes, setThemes, theme, setTheme}) {
   useEffect(() => {
     // any time themes is altered, set the current theme to the first theme in themes (but only if the current theme is null and if the themes state have already been set)
     // aka, changes theme only upon the first time that themes is altered
+       /////////////////// // if this isn't the first time that themes and theme were set, then set theme to the
+
     if (theme === null && themes.length !== 0) {
       setTheme(themes[0]);
     }
@@ -41,7 +43,7 @@ function Settings({ themes, setThemes, theme, setTheme}) {
       })
       .catch(err => {
         // handle errors
-        console.error("Failed to get theme settings from database", err);
+        console.error('Failed to get theme settings from database', err);
       });
   };
   const addTheme = () => {
@@ -53,14 +55,23 @@ function Settings({ themes, setThemes, theme, setTheme}) {
       })
       .catch(err => {
         // handle errors
-        console.error("Failed create new theme in database", err);
+        console.error('Failed to create new theme in database', err);
+      });
+  };
+  const updateTheme = () => {
+    // send PATCH request to /settings/:id on the server to alter the db record associated with the theme currently being used
+    axios.patch(`/settings/${theme._id}`, formValues)
+      .then(() => {
+        // set themes in App's state to be the new list of themes in the db by calling getThemes
+        getThemes();
+      })
+      .catch(err => {
+        // handle errors
+        console.error('Failed to update current theme in database', err);
       });
   };
   const deleteTheme = () => {
     axios.delete('/settings');
-  };
-  const updateTheme = () => {
-    axios.patch('/settings');
   };
   // const setCurrentTheme = (selectedTheme) => {
   //   // set the theme in App's state to be the theme you want the application to currently be using
@@ -82,18 +93,20 @@ function Settings({ themes, setThemes, theme, setTheme}) {
     <div id="settings">
       {/* <label htmlFor="themes">Theme Settings</label> */}
       <span style={{fontWeight:'bold'}}>Theme Loadouts</span>
-      <select id="themes">
+      {/* set the current theme to the selected theme from the list of option tags in the select tag */}
+      <select id="themes" onChange={e => setTheme(themes[e.target.options.selectedIndex])}>
         {
-          // themes.map((themeObj) => {
-          //   return (
-          //     <option key={themeObj.themeName + themeObj._id}>
-          //     {themeObj.themeName}
-          //     </option>
-          //   )
-          // })
+          themes.map((themeObj) => {
+            return (
+              <option key={themeObj._id}>
+              {themeObj.themeName}
+              </option>
+            )
+          })
         }
       </select>
-      <button>Delete Theme</button>
+      <button onClick={deleteTheme}>Delete Theme</button>
+      {/* forms can be filled out with info that is saved in state and then is used for either POST requests or Patch requests */}
       <div id="forms">
         {
           <div key="idk">
@@ -113,7 +126,9 @@ function Settings({ themes, setThemes, theme, setTheme}) {
             <input onChange={e => updateFormValues('borderRadius', e.target.value)} placeholder="insert number (of pixels) you want to round the corners of boxes by" type="number"></input>
           </div>
         }
+        <div>Using these forms, you can:</div>
         <button onClick={addTheme}>Add Theme</button>
+        <button onClick={updateTheme}>Update Current Theme <span style={{color:'darkgrey'}}>empty fields are ignored</span></button>
       </div>
     </div>
   )

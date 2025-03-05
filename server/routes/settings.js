@@ -37,8 +37,8 @@ route.post('/', (req, res) => {
 });
 
 // handle PATCH requests
-route.patch('/', (req, res) => {
-
+route.patch('/:id', (req, res) => {
+  console.log(req);
 });
 
 // handle DELETE requests
