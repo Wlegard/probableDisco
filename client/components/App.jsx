@@ -7,7 +7,7 @@ const axios = require("axios");
 
 function App() {
   const [themes, setThemes] = useState([]);
-  const [theme, setTheme] = useState({});
+  const [theme, setTheme] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [currentImage, setCurrentImage] = useState("https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg");
 
