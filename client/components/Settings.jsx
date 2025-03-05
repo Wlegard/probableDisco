@@ -20,22 +20,21 @@ function Settings({ themes, setThemes, theme, setTheme}) {
   }, []);
 
   useEffect(() => {
-    // any time themes is altered, set the current theme to the first theme in themes (but only if the current theme is null and if the themes state have already been set)
-    // aka, changes theme only upon the first time that themes is altered
-       /////////////////// // if this isn't the first time that themes and theme were set, then set theme to the
-
-    if (theme === null && themes.length !== 0) {
+    // any time themes is altered, set the current theme to the first theme in themes (but only if the current theme is null and if the themes state have already been set OR if the current theme is no longer present in the themes array)
+    // aka, changes theme only upon the first time that themes is altered OR whenever a theme gets deleted
+    if ((theme === null && themes.length !== 0) || !themes.includes(theme)) {
       setTheme(themes[0]);
     }
   }, [themes])
 
+  /////LOOOK AT MEEEEE
   // TESTING LOGGING
   useEffect(() => {
     console.log(theme, themes)
   }, [theme, themes])
 
   const getThemes = () => {
-    // return the result (a promise) of sending a GET request to /settings on server to get an array of all themes in the db
+    // send a GET request to /settings on server to get an array of all themes in the db
     axios.get('/settings')
       .then(settings => {
         // set themes in App's state to be the returned settings data
@@ -46,6 +45,7 @@ function Settings({ themes, setThemes, theme, setTheme}) {
         console.error('Failed to get theme settings from database', err);
       });
   };
+
   const addTheme = () => {
     // send a POST request to /settings on the server to add a new theme to the db
     axios.post('/settings', formValues)
@@ -58,6 +58,7 @@ function Settings({ themes, setThemes, theme, setTheme}) {
         console.error('Failed to create new theme in database', err);
       });
   };
+
   const updateTheme = () => {
     // put only the non-empty form values into a new object that will be sent as the PATCH request's body
     const valuesToChange = {};
@@ -81,8 +82,23 @@ function Settings({ themes, setThemes, theme, setTheme}) {
       });
   };
   const deleteTheme = () => {
-    axios.delete('/settings');
+    // send a DELETE request to /settings/:id on the server to delete the db record associated with the theme currently being used
+    // include the current theme's userId in the body (under the data key) so that the server doesn't need to find said userId from the db again
+    axios.delete(`/settings/${theme._id}`, {
+      data: {userId: theme.userId}
+    })
+      .then((idk) => {
+        console.log(idk)  /////LOOOK AT MEEEEE
+        // set themes in App's state to be the new list of themes in the db by calling getThemes
+        getThemes();
+      })
+      .catch(err => {
+        // handle errors
+        console.error('Failed to delete current theme in database', err);
+      });
   };
+
+  /////LOOOK AT MEEEEE
   // const setCurrentTheme = (selectedTheme) => {
   //   // set the theme in App's state to be the theme you want the application to currently be using
   //   setTheme(selectedTheme);
@@ -102,7 +118,6 @@ function Settings({ themes, setThemes, theme, setTheme}) {
 
   return (
     <div id="settings">
-      {/* <label htmlFor="themes">Theme Settings</label> */}
       <span style={{fontWeight:'bold'}}>Theme Loadouts</span>
       {/* set the current theme to the selected theme from the list of option tags in the select tag */}
       <select id="themes" onChange={e => setTheme(themes[e.target.options.selectedIndex])}>
