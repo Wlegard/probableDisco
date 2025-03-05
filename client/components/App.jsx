@@ -7,7 +7,7 @@ const axios = require("axios");
 
 function App() {
   const [themes, setThemes] = useState([]);
-  const [theme, setTheme] = useState({});
+  const [theme, setTheme] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [currentImage, setCurrentImage] = useState("https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg");
 
@@ -29,11 +29,18 @@ function App() {
       <nav className="main-nav">Slime Wire</nav>
       <div className="main-content">
         <Search handleSearch={searchDeezer} />
-        <Avatar avatars={avatars} 
-                setAvatars={setAvatars}
-                currentImage={currentImage}
-                setCurrentImage={setCurrentImage}/>
-        <Settings />
+        <Avatar
+          avatars={avatars} 
+          setAvatars={setAvatars}
+          currentImage={currentImage}
+          setCurrentImage={setCurrentImage}
+        />
+        <Settings
+          themes={themes} 
+          setThemes={setThemes}
+          theme={theme}
+          setTheme={setTheme}
+        />
       </div>
     </div>
   );
