@@ -4,6 +4,7 @@ const Comments = require("./models/Comments");
 const Library = require("./models/Library");
 const Queue = require("./models/Queue");
 const Settings = require("./models/Settings");
+const Songs = require("./models/Songs");
 
 // connect to mongo database
 mongoose
@@ -22,4 +23,5 @@ module.exports = {
   Library,
   Queue,
   Settings,
+  Songs
 };
