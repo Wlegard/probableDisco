@@ -7,6 +7,7 @@ const commentsRoute = require("./routes/comments");
 const libraryRoute = require("./routes/library");
 const queueRoute = require("./routes/queue");
 const settingsRoute = require("./routes/settings");
+const songsRoute = require("./routes/songs");
 
 // create express app
 const application = express();
@@ -16,6 +17,8 @@ const portNum = 3000;
 // middleware
 application.use(express.json());
 application.use(express.urlencoded({ extended: true }));
+//application.use(cors());
+
 
 // serve up static files (react app)
 const distPath = path.resolve(__dirname, "../dist");
@@ -27,6 +30,7 @@ application.use("/comments", commentsRoute);
 application.use("/library", libraryRoute);
 application.use("/queue", queueRoute);
 application.use("/settings", settingsRoute);
+application.use("/songs", songsRoute);
 
 // start up the express server using the port number
 application.listen(portNum, () => {
