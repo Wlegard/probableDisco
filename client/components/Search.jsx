@@ -1,23 +1,121 @@
-import React from 'react';
-//import { useState } from "react";
+import React, { createContext, useContext, useActionState, useState, useEffect } from "react";
 
-// react hook for functional component to manage state
-//creating a functional component for Search with destructured props
-const Search = ({ handleSearch }) => {
-  // triggers when  typed input field
-  const change = event => {
-    // calls function being passed down by props(get info that was typed in)
-    handleSearch(event.target.value);
+function Search() {
+ 
+  // Hook: useState
+  const [artist, setArtist] = useState(''); // artist query
+  const [song, setSong] = useState(''); // song query
+  const [album, setAlbum] = useState(''); // album query
+  const [results, setResults] = useState([]); // API results
+  const [loading, setLoading] = useState(false); // loading state
+  const [error, setError] = useState('');     // error handling
+
+  // Handle input changes for song, artist, and album
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'artist') setArtist(value);
+    if (name === 'song') setSong(value);
+    if (name === 'album') setAlbum(value);
   };
+
+  // Create the query string 
+  const createQueryString = () => {
+    let query = '';
+    if (artist) query += `artist:'${artist}'`;
+    if (song) query += `track:'${song}'`;
+    if (album) query += `album:'${album}'`;
+    return query;
+  };
+
+  // Handle Submit : make API call
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+    setError('');
+    setResults([]);
+
+    try {
+      // Build the query string with user inputs
+      const queryString = createQueryString();
+      if (!queryString) 
+        setError('enter at least 1 search term')
+         // Ensure at least one parameter is provided
+      
+      const response = await fetch(`https://api.deezer.com/search?q=${queryString}&limit=10`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch results');
+      } 
+
+      const data = await response.json();
+      setResults(data.data || []); 
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    // search for query
-    <div className='search-container'>
-      <div className='search-input-group'>
-        <label className='search-query'>Search</label>
-        <input className='form-control' type='text' onChange={change} />
-        <button className='btn hidden-sm-down'>
-          <span className='glyphicon glyphicon-search'></span>
-        </button>
+    <div className='advanced-search'>
+      <h1 style={{fontFamily: 'creepster'}}> Advanced Search </h1>
+      <div className='search-container'> 
+        <h3>Search for tracks by artist, song, or album—use any combination of these options!</h3>
+        <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="artist">Artist</label>
+          <input
+            type="text"
+            id="artist"
+            name="artist"
+            value={artist}
+            onChange={handleInputChange}
+            placeholder="Search for an artist"
+          />
+        </div>
+        <div>
+          <label htmlFor="song">Song</label>
+          <input
+            type="text"
+            id="song"
+            name="song"
+            value={song}
+            onChange={handleInputChange}
+            placeholder="Search for a song"
+          />
+        </div>
+        <div>
+          <label htmlFor="album">Album</label>
+          <input
+            type="text"
+            id="album"
+            name="album"
+            value={album}
+            onChange={handleInputChange}
+            placeholder="Search for an album"
+          />
+        </div>
+          <button className='submit-button' type='submit'>
+            {' '}
+            🔎
+          </button>
+        </form>
+
+        {loading && <p>Loading...</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      </div>
+
+      <div className='results-container'>
+        <ul style={{ listStyleType: 'none'}}>
+        {results.map((result, index) => (
+          <li key={index}>
+            <strong>{result.title}</strong> by {result.artist.name} from ({result.album.title})
+            <button>add to playlist</button>
+          </li>
+        ))}
+        </ul>
+        <div className='result'></div>
       </div>
     </div>
   );
