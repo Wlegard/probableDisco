@@ -10,7 +10,7 @@ function Settings({ themes, setThemes, theme, setTheme}) {
     tertiaryColor: '',
     cursor: '',
     font: '',
-    borderRadius: 0,
+    borderRadius: '',
     userId: 0,
   });
 
@@ -59,8 +59,18 @@ function Settings({ themes, setThemes, theme, setTheme}) {
       });
   };
   const updateTheme = () => {
+    // put only the non-empty form values into a new object that will be sent as the PATCH request's body
+    const valuesToChange = {};
+    // loop through the formValues object
+    for (let key in formValues) {
+      // for each key/value pair in formValues (excluding userId), give valuesToChange a copy of the same key/value pair as long as the value isn't an empty string
+      if (formValues[key] !== '' && key !== 'userId') {
+        valuesToChange[key] = formValues[key];
+      }
+    }
+
     // send PATCH request to /settings/:id on the server to alter the db record associated with the theme currently being used
-    axios.patch(`/settings/${theme._id}`, formValues)
+    axios.patch(`/settings/${theme._id}`, valuesToChange)
       .then(() => {
         // set themes in App's state to be the new list of themes in the db by calling getThemes
         getThemes();
@@ -79,6 +89,7 @@ function Settings({ themes, setThemes, theme, setTheme}) {
   // }
 
   const updateFormValues = (key, value) => {
+    console.log(value);
     setFormValues(currentValues => {
       // update the corresponding form value in Setting's form values state to be the inputted value from the forms
       currentValues[key] = value;
