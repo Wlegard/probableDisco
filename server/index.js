@@ -43,8 +43,21 @@ app.get('/auth/failure', (req, res) => {
 });
 
 app.get('/protected', isLoggedIn, (req, res) => {
-  res.send('Hello');
+  res.send(`Hello ${req.user.displayName}`);
 });
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Failed to logout');
+    }
+    res.send('User logged out')
+  })
+})
+
+// app.get('/home', (req, res) => {
+  
+// })
 // select port number
 const portNum = 3000;
 

@@ -57,7 +57,7 @@ function App() {
             {/* Home/App */}
             {/* Homepage elements in this route div */}
             <Route
-              path='/'
+              path='/home'
               element={
                 <div>
                   <h1 style={{fontFamily: 'creepster'}}>Get Slimed</h1>
