@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const passport = require('passport')
+const passport = require('passport');
+const session = require('express-session');
 // import routes
 const avatarRoute = require("./routes/avatar");
 const commentsRoute = require("./routes/comments");
@@ -11,18 +12,37 @@ const songsRoute = require("./routes/songs");
 
 // create express app
 const app = express();
+// SWITCH TO ENV VARIABLE??
+app.use(session({ secret: "cats" }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 require('../auth.js');
 
+function isLoggedIn(req, res, next) {
+  req.user ? next() : res.sendStatus(401);
+}
+
 app.get('/', (req, res) => {
   res.send('<a href="/auth/google">Authenticate with Google</a>');
-}); 
+});
 
-app.get('/auth/google', 
+app.get('/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] })
-)
+);
 
-app.get('/protected', (req, res) => {
+app.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/protected',
+    failureRedirect: '/auth/failure',
+  })
+);
+
+app.get('/auth/failure', (req, res) => {
+  res.send('something went wrong...');
+});
+
+app.get('/protected', isLoggedIn, (req, res) => {
   res.send('Hello');
 });
 // select port number
