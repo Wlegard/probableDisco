@@ -9,6 +9,21 @@ const  Library = () =>{
   const newSong = { id: Date.now(), title, artist, duration };
   setSongs([...songs, newSong]);
 };
+
+
+
+useEffect(() => {
+  axios.get('http://localhost:3000/library')
+    .then(response => {
+      setSongs(response.data); 
+    })
+    .catch(error => {
+      console.error('Error fetching songs:', error);
+    });
+}, []);
+
+
+
 const filteredSongs = songs.filter((song) =>
   song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
   song.artist.toLowerCase().includes(searchQuery.toLowerCase())
@@ -16,7 +31,7 @@ const filteredSongs = songs.filter((song) =>
 
 
 return (
-  <div className='library-playlist' style={{ border: "2px solid black", padding: "10px", borderRadius: "8px" }}>
+  <div className='library-playlist' style={{ border: "2px solid black", padding: "10px", borderRadius: "8px", width: "300px" }}>
     
      <h2>🎵 Library Playlist🎵</h2>
      <input
