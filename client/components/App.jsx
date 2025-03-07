@@ -62,7 +62,12 @@ function App() {
               element={
                 <div>
                   <h1 style={{fontFamily: 'creepster'}}>Get Slimed</h1>
-                  <Settings />
+                  <Settings
+                    themes={themes}
+                    setThemes={setThemes}
+                    theme={theme}
+                    setTheme={setTheme}
+                  />
                    {/* Avatar */}
                   <img
                     src={currentImage}
