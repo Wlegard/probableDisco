@@ -6,7 +6,8 @@ const Queue = require("./models/Queue");
 const Settings = require("./models/Settings");
 const Songs = require("./models/Songs");
 const Search = require("./models/Search");
-const Users = require("./models/User");
+const Users = require("./models/Users");
+const Sessions = require("./models/Sessions");
 
 // connect to mongo database
 mongoose
@@ -25,5 +26,8 @@ module.exports = {
   Library,
   Queue,
   Settings,
-  Songs
+  Songs, 
+  Search,
+  Users,
+  Sessions
 };

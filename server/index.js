@@ -11,6 +11,7 @@ const settingsRoute = require("./routes/settings");
 const songsRoute = require("./routes/songs");
 const searchRoute = require("./routes/search");
 const usersRoute = require("./routes/users");
+const sessionsRoute = require("./routes/sessions");
 
 // create express app
 const app = express();
@@ -83,6 +84,7 @@ app.use("/settings", isLoggedIn, settingsRoute);
 app.use("/songs", isLoggedIn, songsRoute);
 app.use("/search", isLoggedIn, searchRoute);
 app.use("/users", isLoggedIn, usersRoute);
+app.use("/sessions", isLoggedIn, sessionsRoute);
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {
