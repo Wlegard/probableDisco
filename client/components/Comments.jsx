@@ -29,7 +29,7 @@ const Comments = ({ songId }) => {
   //handle form submission to add a new comment
   const handleSubmit = (e) => {
     //prevent default form page refresh
-    // eventt.preventDefault();
+    // e.preventDefault();
 
     axios.post('/db/comments', {
       // user data should be unique
