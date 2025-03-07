@@ -10,6 +10,7 @@ const queueRoute = require("./routes/queue");
 const settingsRoute = require("./routes/settings");
 const songsRoute = require("./routes/songs");
 const searchRoute = require("./routes/search");
+const usersRoute = require("./routes/users");
 
 // create express app
 const app = express();
@@ -81,6 +82,7 @@ app.use("/queue", isLoggedIn, queueRoute);
 app.use("/settings", isLoggedIn, settingsRoute);
 app.use("/songs", isLoggedIn, songsRoute);
 app.use("/search", isLoggedIn, searchRoute);
+app.use("/users", isLoggedIn, usersRoute);
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {

@@ -5,6 +5,8 @@ const Library = require("./models/Library");
 const Queue = require("./models/Queue");
 const Settings = require("./models/Settings");
 const Songs = require("./models/Songs");
+const Search = require("./models/Search");
+const Users = require("./models/User");
 
 // connect to mongo database
 mongoose

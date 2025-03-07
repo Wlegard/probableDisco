@@ -1,7 +1,7 @@
 const express = require('express');
 
-// import Search db model
-const { Search } = require('../database/index');
+// import Users db model
+const { Users } = require('../database/index');
 
 const route = express.Router();
 
