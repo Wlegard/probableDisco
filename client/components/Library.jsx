@@ -13,7 +13,7 @@ function Library () {
 
 
 
-useEffect(() => {
+const getSongs = () => {
   axios.get('/api/songs')
     .then(response => {
       setSongs(response.data); 
@@ -21,7 +21,7 @@ useEffect(() => {
     .catch(error => {
       console.error('Error fetching songs:', error);
     });
-}, []);
+};
 
 
 
