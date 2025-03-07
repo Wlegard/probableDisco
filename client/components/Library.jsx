@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 const axios = require ('axios');
-const  Library = () =>{
+
+function Library () {
 
   const [songs, setSongs] = useState([]); 
   const [searchQuery, setSearchQuery] = useState(""); 
@@ -13,7 +14,7 @@ const  Library = () =>{
 
 
 useEffect(() => {
-  axios.get('http://localhost:3000/library')
+  axios.get('/api/songs')
     .then(response => {
       setSongs(response.data); 
     })
