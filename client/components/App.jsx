@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
 const axios = require('axios');
+
 // Components
 import Settings from './Settings.jsx';
 import Search from './Search.jsx';
@@ -18,64 +18,44 @@ function App() {
   const [currentImage, setCurrentImage] = useState(
     'https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg'
   );
+  
+
+  const handleLogout = () => {
+    // Send GET req to server logout route
+    window.location.href = '/logout'
+  };
 
   return (
     <Router>
       <div>
         <img src={Logo} alt='App Logo' style={{ height: 115, width: 500 }} />
-
         {/* Nav Links */}
         <nav className='nav'>
           <ul>
+            <li><Link to='/home'>Home</Link></li>
+            <li><Link to='/settings'>Settings</Link></li>
+            <li><Link to='/search'>Advanced Search</Link></li>
+            <li><Link to='/avatar'>Avatar</Link></li>
+            <li><Link to='/library'>Library</Link></li>
+            <li><Link to='/comments'>Comments</Link></li>
+            <li><Link to='/queue'>Music Player</Link></li>
             <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/settings'>Settings</Link>
-            </li>
-            <li>
-              <Link to='/search'>Advanced Search</Link>
-            </li>
-            <li>
-              <Link to='/avatar'>Avatar</Link>
-            </li>
-            <li>
-              <Link to='/library'>Library</Link>
-            </li>
-            <li>
-              <Link to='/comments'>Comments</Link>
-            </li>
-            <li>
-              <Link to='/queue'>Music Player</Link>
+              <button onClick={handleLogout}>Log Out</button>
             </li>
           </ul>
         </nav>
 
-       
         <div className='main-content'>
-            {/* Routes = Nav Link Page Paths */}
+          {/* Routes = Nav Link Page Paths */}
           <Routes>
-            {/* Home/App */}
-            {/* Homepage elements in this route div */}
-            <Route
-              path='/'
-              element={
-                <div>
-                  <h1 style={{fontFamily: 'creepster'}}>Get Slimed</h1>
-                  <Settings
-                    themes={themes}
-                    setThemes={setThemes}
-                    theme={theme}
-                    setTheme={setTheme}
-                  />
-                   {/* Avatar */}
-                  <img
-                    src={currentImage}
-                    style={{ width: '50%', height: 'auto' }}
-                  />
-                </div>
-              }
-            />
+
+            <Route path='/home' element={
+              <div>
+                <h1 style={{ fontFamily: 'creepster' }}>Get Slimed</h1>
+                <img src={currentImage} style={{ width: '50%', height: 'auto' }} />
+              </div>
+            }/>
+
             {/* Settings */}
             <Route path='/settings' element={<Settings
               themes={themes}
@@ -86,17 +66,14 @@ function App() {
             {/* Search */}
             <Route path='/search' element={<Search />} />
             {/* Avatar */}
-            <Route
-              path='/avatar'Define your Routes here
-              element={
-                <Avatar
-                  avatars={avatars}
-                  setAvatars={setAvatars}
-                  currentImage={currentImage}
-                  setCurrentImage={setCurrentImage}
-                />
-              }
-            />
+            <Route path='/avatar' element={
+              <Avatar
+                avatars={avatars}
+                setAvatars={setAvatars}
+                currentImage={currentImage}
+                setCurrentImage={setCurrentImage}
+              />
+            }/>
             {/* Library */}
             <Route path='/library' element={<Library />} />
             {/* Comments */}

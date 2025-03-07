@@ -1,0 +1,43 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14  # Adjust the version based on your Node.js version
+    commands:
+      # Install dependencies for the backend and frontend
+      echo Installing backend dependencies...
+      cd backend
+      npm install
+
+      echo Installing frontend dependencies...
+      cd ../frontend
+      npm install
+
+  build:
+    commands:
+      echo Building frontend React app...
+      cd ../frontend
+      npm run build  # This will create a production build for React (usually in the 'build' folder)
+
+      echo Building backend Express app...
+      cd ../backend
+      npm run build  # If you have a build command in your backend (e.g., TypeScript or similar)
+
+  post_build:
+    commands:
+      echo Build complete.
+
+artifacts:
+  files:
+    # This assumes your React build is placed in 'frontend/build', and you want to package both the backend and frontend together
+    - frontend/build/**/*   # Include everything in the React app's build directory
+    - backend/**/*          # Include all backend files (Express API)
+
+  base-directory: build  # You can specify this if you want to change the directory structure for artifacts
+  discard-paths: yes      # If you don't want directory structure to be preserved in the artifact
+
+cache:
+  paths:
+    - 'frontend/node_modules/**/*'
+    - 'backend/node_modules/**/*'
