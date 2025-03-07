@@ -13,6 +13,7 @@ import Logo from '../images/slimewire.png';
 
 function App() {
   const [themes, setThemes] = useState([]);
+  const [theme, setTheme] = useState(null);
   const [avatars, setAvatars] = useState([]);
   const [currentImage, setCurrentImage] = useState(
     'https://img.freepik.com/premium-vector/cute-green-slime-monster-illustration_799627-169.jpg'
@@ -61,7 +62,12 @@ function App() {
               element={
                 <div>
                   <h1 style={{fontFamily: 'creepster'}}>Get Slimed</h1>
-                  <Settings />
+                  <Settings
+                    themes={themes}
+                    setThemes={setThemes}
+                    theme={theme}
+                    setTheme={setTheme}
+                  />
                    {/* Avatar */}
                   <img
                     src={currentImage}
@@ -71,7 +77,12 @@ function App() {
               }
             />
             {/* Settings */}
-            <Route path='/settings' element={<Settings />} />
+            <Route path='/settings' element={<Settings
+              themes={themes}
+              setThemes={setThemes}
+              theme={theme}
+              setTheme={setTheme}
+            />} />
             {/* Search */}
             <Route path='/search' element={<Search />} />
             {/* Avatar */}
