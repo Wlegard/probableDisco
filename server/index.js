@@ -1,13 +1,15 @@
 const express = require('express');
-const path = require('path');
-const passport = require('passport');
 const session = require('express-session');
+const path = require('path');
+
+const passport = require('passport');
 const avatarRoute = require("./routes/avatar");
 const commentsRoute = require("./routes/comments");
 const libraryRoute = require("./routes/library");
 const queueRoute = require("./routes/queue");
 const settingsRoute = require("./routes/settings");
 const songsRoute = require("./routes/songs");
+const searchRoute = require("./routes/search");
 
 // create express app
 const app = express();
@@ -78,6 +80,7 @@ app.use("/library", isLoggedIn, libraryRoute);
 app.use("/queue", isLoggedIn, queueRoute);
 app.use("/settings", isLoggedIn, settingsRoute);
 app.use("/songs", isLoggedIn, songsRoute);
+app.use("/search", isLoggedIn, searchRoute);
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {

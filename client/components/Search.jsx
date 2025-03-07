@@ -112,6 +112,7 @@ function Search() {
           <li key={index}>
             <strong>{result.title}</strong> by {result.artist.name} from ({result.album.title})
             <button>add to playlist</button>
+            <button>play now</button>
           </li>
         ))}
         </ul>
