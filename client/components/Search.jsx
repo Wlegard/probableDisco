@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useActionState, useState, useEffect } from "react";
-
+// API Search
 function Search() {
  
   // Hook: useState
@@ -111,8 +111,12 @@ function Search() {
         {results.map((result, index) => (
           <li key={index}>
             <strong>{result.title}</strong> by {result.artist.name} from ({result.album.title})
+            {/*// TODO : buttons and relationship with server side requests and database collections (songs, library, and queue) */ }
             <button>add to playlist</button>
-            <button>play now</button>
+            <button>add to existing playlist</button>
+            <button>add to new playlist</button>
+
+            <button>play now</button> {/** queue */}
           </li>
         ))}
         </ul>
