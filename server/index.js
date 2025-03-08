@@ -1,14 +1,20 @@
 // MAKE SURE TO UNCOMMENT ALL THAT START WITH ///// AND THE GOOGLE AUTH PART
 const express = require('express');
-const path = require('path');
-const passport = require('passport');
 const session = require('express-session');
-const avatarRoute = require('./routes/avatar');
-const commentsRoute = require('./routes/comments');
-const libraryRoute = require('./routes/library');
-const queueRoute = require('./routes/queue');
-const settingsRoute = require('./routes/settings');
-const songsRoute = require('./routes/songs');
+const path = require('path');
+
+const passport = require('passport');
+
+const avatarRoute = require("./routes/avatar");
+const commentsRoute = require("./routes/comments");
+const libraryRoute = require("./routes/library");
+const queueRoute = require("./routes/queue");
+const settingsRoute = require("./routes/settings");
+const songsRoute = require("./routes/songs");
+const searchRoute = require("./routes/search");
+const usersRoute = require("./routes/users");
+const sessionsRoute = require("./routes/sessions");
+
 
 // create express app
 const app = express();
@@ -76,12 +82,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(distPath));
 
 // link routers to express server
+
 app.use('/avatar', isLoggedIn, avatarRoute);
 app.use('/comments', isLoggedIn, commentsRoute);
 app.use('/library', isLoggedIn, libraryRoute);
 app.use('/queue', isLoggedIn, queueRoute);
 app.use('/settings', isLoggedIn, settingsRoute);
 app.use('/songs', isLoggedIn, songsRoute);
+app.use("/search", searchRoute);
+app.use("/users", usersRoute);
+app.use("/sessions", sessionsRoute);
+
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {
