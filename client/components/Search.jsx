@@ -15,15 +15,14 @@ function Search() {
   const [results, setResults] = useState([]); // API results
   const [loading, setLoading] = useState(false); // loading state
   const [error, setError] = useState(''); // error handling
-
-  // * Save to DB Hoooks * //
+  //* selectedSong = songModel */
   const [selectedSong, setSelectedSong] = useState({
-    trackId: '',
+    trackId: 0,
     title: '',
     link: '',
     preview: '',
-    artist: { name: '', id: ''},
-    album: { title: '', id: ''}
+    artist: { name: '', id: 0},
+    album: { title: '', id: 0}
   });
 
   // Query Inputs
@@ -82,7 +81,7 @@ function Search() {
   // Handle Song Selection
   const handleSelect = (result) => {
     // Check if result type is a track
-    if (!result.type === 'track') console.error('wrong format');
+    if (!result.type === 'track') console.error('unable to add this format');
     // Format result to match selectedSong
     const formattedSong = {
       trackId: result.id,
@@ -100,19 +99,18 @@ function Search() {
     };
     // Set State
     setSelectedSong(formattedSong);
-    console.log("Selected Song:", formattedSong);
     // Init post request to server
     addSong(selectedSong)
   }
 
   // Add song from search results to Songs Collection
-  const addSong = () => {
+  const addSong = (selectedSong) => {
     // songs endpoint and selectSong from state
     axios.post('/songs', selectedSong )
     // success handling
     .then(() => {
-      // TODO : client side visual for success
-      console.log(`${selectedSong} added to collection`);
+      // TODO : render client side success message
+      console.log(`${selectedSong.title} added to collection`);
     })
     // error handling
     .catch((err) => {

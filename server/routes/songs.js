@@ -9,12 +9,12 @@ const route = express.Router();
 // handle GET requests 
 route.get('/', (req, res) => {
   // TODO double check  params is correct
-  const { track } = req.params;
+  // const { track } = req.params;
   // mongooose method to find
-  Songs.find({ req })
-    .then(()=>{   
+  Songs.find()
+    .then((data)=>{   
       // successful status fetching songs
-      res.status(200).send("Success, found song!")
+      res.status(200).send(data)
     })
     .catch((err)=>{
       console.error("Failure to find song:", err)
@@ -26,17 +26,19 @@ route.get('/', (req, res) => {
 //* Trigger from button click in Search Component 
 // handle POST requests
 route.post('/', (req, res) => {
+  
   const { song } = req.body
   // mongoose method to create
-  Songs.create(song)
-    .then((res)=>{
-      // TODO console check 
-      console.log(res);
+  Songs.create(req.body)
+    .then(()=>{
+      
+ 
       //ok status for successful creation
+      console.log('song added')
       res.sendStatus(201);
     })
     .catch((err)=>{
-      console.error("Failure!:", err);
+      console.error("Add song failed at server:", err);
       // internal service error
       res.sendStatus(500);
   })
