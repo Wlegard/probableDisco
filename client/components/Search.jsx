@@ -17,6 +17,7 @@ function Search() {
   const [error, setError] = useState(''); // error handling
 
   // * Save to DB Hoooks * //
+  const [selectedSong, setSelectedSong] = useState({});
 
   // Query Inputs
   const handleInputChange = e => {
@@ -41,7 +42,7 @@ function Search() {
     e.preventDefault();
     // results handling
     setLoading(true);
-    //TODO
+    //TODO : message for no results
     setError('');
     setResults([]);
 
@@ -61,6 +62,7 @@ function Search() {
       }
 
       const data = await response.json();
+      console.log('search success')
       setResults(data.data);
 
     } catch (err) {
@@ -70,9 +72,29 @@ function Search() {
     }
   };
 
+  // Handle Song Selection
+  const handleSelect = (result) => {
+    // check if type = track
+    console.log(result);
+    if (result.type === 'track') setSelectedSong(result);
+    // setSelectedSong(result)
+      // setSelectSong(e.target)
+      // error if no
+  }
+
   // Add song from search results to Songs Collection
   const addSong = () => {
-    axios.post('/songs');
+    // songs endpoint and selectSong from state
+    axios.post('/songs', selectedSong )
+    // success handling
+    .then(() => {
+      // TODO : client side visual for success
+      console.log(`${selectedSong} added to collection`);
+    })
+    // error handling
+    .catch((err) => {
+      console.error('Add song failed at client:', err);
+    });
   };
 
   return (
@@ -130,12 +152,21 @@ function Search() {
       <div className='results-container'>
         <ul style={{ listStyleType: 'none' }}>
           {results.map((result, index) => (
-            <li key={index}>
+            <li 
+              key={index} 
+              className={`p-2 rounded ${
+                selectedSong === result ? "bg-blue-500 text-white" : "bg-gray-200"
+              }`}
+            >
               <strong>{result.title}</strong> by {result.artist.name} from (
               {result.album.title})
-              {/*// TODO : buttons and relationship with server side requests and database collections (songs, library, and queue) */}
-              <button>add to songs</button>
-              <button>play now</button> {/** queue */}
+              <button
+                className="ml-2 bg-gray-800 text-white px-3 py-1 rounded"
+                onClick={() => handleSelect(result)}
+              >
+                Add to songs
+              </button>
+             {/** <button>play now</button>  queue */}
             </li>
           ))}
         </ul>
