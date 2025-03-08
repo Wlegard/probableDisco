@@ -17,7 +17,14 @@ function Search() {
   const [error, setError] = useState(''); // error handling
 
   // * Save to DB Hoooks * //
-  const [selectedSong, setSelectedSong] = useState({});
+  const [selectedSong, setSelectedSong] = useState({
+    trackId: '',
+    title: '',
+    link: '',
+    preview: '',
+    artist: { name: '', id: ''},
+    album: { title: '', id: ''}
+  });
 
   // Query Inputs
   const handleInputChange = e => {
@@ -74,12 +81,28 @@ function Search() {
 
   // Handle Song Selection
   const handleSelect = (result) => {
-    // check if type = track
-    console.log(result);
-    if (result.type === 'track') setSelectedSong(result);
-    // setSelectedSong(result)
-      // setSelectSong(e.target)
-      // error if no
+    // Check if result type is a track
+    if (!result.type === 'track') console.error('wrong format');
+    // Format result to match selectedSong
+    const formattedSong = {
+      trackId: result.id,
+      title: result.title,
+      link: result.link,
+      preview: result.preview || '', // previews can be missing
+      artist: {
+        name: result.artist.name,
+        id: result.artist.id,
+      },
+      album: {
+        title: result.album.title,
+        id: result.album.id,
+      },
+    };
+    // Set State
+    setSelectedSong(formattedSong);
+    console.log("Selected Song:", formattedSong);
+    // Init post request to server
+    addSong(selectedSong)
   }
 
   // Add song from search results to Songs Collection
