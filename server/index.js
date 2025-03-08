@@ -76,15 +76,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(distPath));
 
 // link routers to express server
-app.use("/avatar", isLoggedIn, avatarRoute);
-app.use("/comments", isLoggedIn, commentsRoute);
-app.use("/library", isLoggedIn, libraryRoute);
-app.use("/queue", isLoggedIn, queueRoute);
-app.use("/settings", isLoggedIn, settingsRoute);
-app.use("/songs", isLoggedIn, songsRoute);
-app.use("/search", isLoggedIn, searchRoute);
-app.use("/users", isLoggedIn, usersRoute);
-app.use("/sessions", isLoggedIn, sessionsRoute);
+app.use("/avatar", avatarRoute);
+app.use("/comments", commentsRoute);
+app.use("/library", libraryRoute);
+app.use("/queue", queueRoute);
+app.use("/settings", settingsRoute);
+app.use("/songs", songsRoute);
+app.use("/search", searchRoute);
+app.use("/users", usersRoute);
+app.use("/sessions", sessionsRoute);
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {

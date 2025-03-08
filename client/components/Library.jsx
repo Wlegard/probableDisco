@@ -12,16 +12,25 @@ function Library () {
 };
 
 
-
-const getSongs = () => {
-  axios.get('/api/songs')
-    .then(response => {
-      setSongs(response.data); 
-    })
-    .catch(error => {
-      console.error('Error fetching songs:', error);
-    });
+const getPlaylists = () => {
+  axios.get('/api/library')
+  .then(response => {
+    setSongs(response.data); 
+  })
+  .catch(error => {
+    console.error('Error fetching playlists:', error);
+  });
 };
+
+// const getSongs = () => {
+//   axios.get('/api/songs')
+//     .then(response => {
+//       setSongs(response.data); 
+//     })
+//     .catch(error => {
+//       console.error('Error fetching songs:', error);
+//     });
+// };
 
 
 

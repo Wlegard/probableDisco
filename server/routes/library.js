@@ -54,7 +54,7 @@ route.post('/', (req, res) => {
   //* Add to new playlist "Create and Add to new Playlist"
   //* Button at Library Component
 // handle PATCH requests
-route.patch('/playlists/:id', (req, res) => {x
+route.patch('/', (req, res) => {x
   Library.findByIdAndUpdate(req.params, req.body)
 
 .then(()=>{
@@ -70,7 +70,7 @@ res.sendStatus(500);
 
 // TODO : connect to button in library
 // handle DELETE requests
-route.delete('/playlists/:id', (req, res) => { 
+route.delete('/', (req, res) => { 
   Library.findByIdAndDelete(req.params.id)
   .then(()=>{
       //ok success status for deletion
