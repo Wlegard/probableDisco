@@ -4,7 +4,6 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const GOOGLE_CLIENT_ID = '153799277918-2o182nq935aqb9qec22g262ka2epsr28.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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'
 
-
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
@@ -15,7 +14,6 @@ passport.use(new GoogleStrategy({
     return done(null, profile); // change to err when we have a db
   }
 ));
-
 
 passport.serializeUser(function (user, done) {
   done(null, user);
