@@ -1,9 +1,8 @@
 
 
 //useState -manage component state
-//useEffect- fetching data on mount
+//useEffect- fetching data - Runs code when the component mounts
 import React, { useState, useEffect } from "react";
-import Search from "./Search.jsx";
 const axios = require("axios"); // handles HTTP request
 
 
@@ -11,11 +10,11 @@ const axios = require("axios"); // handles HTTP request
 function Library() {
   // holds playlist, updated playlist = empty array
   const [playlists, setPlaylists] = useState([]);
-
+//holds new value for creating a new playlist
   const [playlistName, setPlaylistName] = useState("");
 //renaming playlist
 const [editingPlaylistId, setEditingPlaylistId] = useState(null); // To keep track of the playlist being renamed
-  //store new playlist names when creating one
+  //store new playlist names when renaming one
 
   const [newPlaylist, setNewPlaylist] = useState(
    // {
@@ -36,18 +35,20 @@ const [editingPlaylistId, setEditingPlaylistId] = useState(null); // To keep tra
 );
 //fetch playlists when component mounts
 useEffect(() => {
+  // invoke function to fetch data
   getPlaylists();
+  //runs when the component first renders
 }, []);
 
 
-//get request to 
+//get request to fetch data from server side
   const getPlaylists = () => {
     axios
       .get("/library")
       .then((response) => {
-        console.log("Fetched playlists:", response.data); // Log the response data
+       // console.log("Fetched playlists:", response.data); // Log the response data
 
-        setPlaylists(response.data);
+        setPlaylists(response.data); // updates state with fetched data
       })
       .catch((error) => {
         console.error("Error fetching playlists:", error);
@@ -55,21 +56,19 @@ useEffect(() => {
   };
 
 
+//function gets triggered when for is submitted
   const handleInput = (e) => {
     e.preventDefault(); // Prevent page reload
     if (playlistName.trim() !== "") {
-      addPlaylist(playlistName); // Add playlist if name is provided
+      addPlaylist(playlistName); // Add to playlist if name is provided
     }
   };
 
-  const handlePlaylistClick = (playlistId) => {
-    console.log("Playlist clicked with ID:", playlistId);
-  }
-
   
-  const handleDelete = (e) => {
+  
+  // const handleDelete = (e) => {
 
-  };
+  // };
 
 
 const handleRename = (playlistId, currentName) =>{
@@ -77,17 +76,18 @@ const handleRename = (playlistId, currentName) =>{
   setNewPlaylist(currentName)
 }
 
-
+// post request to create a playlist
   const addPlaylist = (playlistName) => {
     axios
+    //endpoint, request.body
       .post("/library", {
-        name: playlistName,
-        songs: [],
+        name: playlistName, // name of playlist
+        songs: [], // empty array for new songs
       })
       .then((response) => {
         console.log("Success adding playlist:", response.data);
-        getPlaylists();
-        setPlaylistName("")
+        getPlaylists(); //refresh backend
+        setPlaylistName("")// clear input field
       })
       .catch((err) => {
         console.error("Error adding playlist", err);
@@ -169,16 +169,16 @@ const handleRename = (playlistId, currentName) =>{
                 <div>
                   <h3>
                     
-                  <button
+                  {/* <button
                       style={{ background: "none", border: "none", color: "blue", cursor: "pointer" }}
                       onClick={() => handlePlaylistClick(playlist._id)}
-                    >
+                    > */}
                     
                     
                     
                     
                     {playlist.name}
-                    </button>
+                    {/* </button> */}
                     
                     
                     </h3>
